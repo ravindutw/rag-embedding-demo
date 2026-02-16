@@ -9,3 +9,7 @@ def init_embedding_model(project_id, location):
     )
 
     return embeddings
+
+
+def add_to_vector_db(vector_store, chunks):
+    vector_store.add_documents(documents=chunks)
