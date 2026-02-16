@@ -1,3 +1,7 @@
+# RAG Embedding Demo
+# © 2026 Ravindu Wijesundara
+# https://github.com/ravindutw/rag-embedding-demo.git
+
 import os
 import embedding
 from vector_db import MilvusDB
@@ -10,9 +14,6 @@ PROJECT_ID = os.environ.get("GCP_PROJECT_ID")
 LOCATION = os.environ.get("GCP_REGION")
 MILVUS_COLLECTION_NAME = os.environ.get("MILVUS_COLLECTION_NAME")
 MILVUS_HOST = os.environ.get("MILVUS_HOST")
-
-#KEY_PATH = os.environ.get("GCP_KEY_PATH")
-#os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = KEY_PATH
 
 embedding_model = embedding.init_embedding_model(PROJECT_ID, LOCATION)
 vector_db = MilvusDB.init_vector_db(embedding_model, MILVUS_COLLECTION_NAME, MILVUS_HOST)
