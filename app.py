@@ -1,17 +1,21 @@
 import os
 import embedding
 from vector_db import MilvusDB
-from pymilvus import utility
 import handle_docs
+from dotenv import load_dotenv
 
-PROJECT_ID = "sliit-labs-and-projects"
-LOCATION = os.environ.get("GOOGLE_CLOUD_REGION", "global")
+load_dotenv()
 
-key_path = "keys/sliit-labs-and-projects-0696ba00c169.json"
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = key_path
+PROJECT_ID = os.environ.get("GCP_PROJECT_ID")
+LOCATION = os.environ.get("GCP_REGION")
+MILVUS_COLLECTION_NAME = os.environ.get("MILVUS_COLLECTION_NAME")
+MILVUS_HOST = os.environ.get("MILVUS_HOST")
+
+#KEY_PATH = os.environ.get("GCP_KEY_PATH")
+#os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = KEY_PATH
 
 embedding_model = embedding.init_embedding_model(PROJECT_ID, LOCATION)
-vector_db = MilvusDB.init_vector_db(embedding_model)
+vector_db = MilvusDB.init_vector_db(embedding_model, MILVUS_COLLECTION_NAME, MILVUS_HOST)
 
 def embedd():
     docs = handle_docs.load_docs()
@@ -19,9 +23,9 @@ def embedd():
     embedding.add_to_vector_db(vector_db, chunks)
 
 def search(query):
-    result = vector_db.similarity_search(query, k=2)
+    result = vector_db.similarity_search(query, k=1)
     print(result)
 
 #embedd()
-search("expected value")
+search("perceptron")
 

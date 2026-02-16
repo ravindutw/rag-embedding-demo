@@ -3,22 +3,15 @@ from langchain_milvus import Milvus
 class MilvusDB:
 
     @staticmethod
-    def init_vector_db(embeddings):
+    def init_vector_db(embeddings, milvus_collection_name, milvus_host):
+
         vector_store = Milvus(
             embedding_function=embeddings,
-            collection_name="vector_db",
+            collection_name=milvus_collection_name,
             connection_args = {
-                "uri": "http://dev-server.gcp.ravinduw.com:19530"
+                "uri": milvus_host
             }
         )
 
         return vector_store
 
-
-
-"""
-connection_args={
-                "host": "dev-server.gcp.ravinduw.com",
-                "port": "19530"
-            }
-"""

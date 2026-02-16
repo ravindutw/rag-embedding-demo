@@ -1,8 +1,11 @@
 import os
 from langchain_community.document_loaders import DirectoryLoader, PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
+from dotenv import load_dotenv
 
-FOLDER_PATH = "documents"
+load_dotenv()
+
+FOLDER_PATH = os.environ.get("FOLDER_PATH")
 
 def load_docs():
   if not os.path.exists(FOLDER_PATH):
